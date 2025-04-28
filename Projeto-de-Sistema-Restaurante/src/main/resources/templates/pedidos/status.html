@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status do Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!--Barra de navegação-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Madera Restaurante</a>
+        </div>
+    </nav>
+
+    <!--Conteudo da pagina-->   
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Status do Pedido #<span th:text="${pedido.id}"></span></h2>
+
+                        <!--Informações do pedido-->
+                        <div class="mb-4">
+                            <h5>Informações do Pedido</h5>
+                            <p><strong>Mesa:</strong> <span th:text="${pedido.mesa.id}"></span></p>
+                            <p><strong>Status:</strong> <span th:text="${pedido.status}"></span></p>
+                            <p><strong>Valor Total:</strong> <span th:text="${#numbers.formatCurrency(pedido.valorTotal)}"></span></p>
+                            <p><strong>Observação:</strong> <span th:text="${pedido.observacao ?: 'Nenhuma observação'}"></span></p>
+                        </div>
+
+                        <!--Produtos do pedido-->
+                        <div class="mb-4">
+                            <h5>Produtos</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item" th:each="produto : ${pedido.produtos}">
+                                    <span th:text="${produto.nome}"></span> - 
+                                    <span th:text="${#numbers.formatCurrency(produto.valor)}"></span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--Botões para cancelar ou finalizar o pedido-->
+                        <div class="d-flex justify-content-end gap-2">
+                            <a th:if="${pedido.status.name() == 'ABERTO'}" 
+                               th:href="@{/pedidos/{id}/cancelar(id=${pedido.id})}"
+                               href = "/pedidos/novo"
+                               class="btn btn-danger">Cancelar Pedido</a>
+
+                            <a th:if="${pedido.status.name() == 'EM_PRODUCAO'}"
+                               th:href="@{/pedidos/{id}/pagamento(id=${pedido.id})}"
+                               class="btn btn-success">Finalizar Pedido</a>
+                            <a href="/pedidos/novo" class="btn btn-secondary">Voltar ao Cardápio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

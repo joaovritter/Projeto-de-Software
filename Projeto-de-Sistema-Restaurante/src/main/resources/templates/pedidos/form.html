@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: html(~{::head},~{::body})}">
+<head>
+    <title>Novo Pedido</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Novo Pedido</h1>
+        
+        <form th:action="@{/pedidos}" th:object="${pedido}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <!--Mesa-->
+            <div class="mb-3">
+                <label for="mesa" class="form-label">Mesa</label>
+                <select class="form-control" id="mesa" th:field="*{mesa}" required>
+                    <option value="">Selecione uma mesa</option>
+                    <option th:each="mesa : ${mesas}" 
+                            th:value="${mesa.id}"
+                            th:text="${mesa.id}">
+                    </option>
+                </select>
+            </div>
+
+            <!--Produtos-->
+            <div class="mb-3">
+                <label for="produtos" class="form-label">Produtos</label>
+                <select class="form-control" id="produtos" th:field="*{produtos}" multiple required>
+                    <option th:each="produto : ${produtos}" 
+                            th:value="${produto.id}"
+                            th:text="${produto.nome + ' - ' + #numbers.formatCurrency(produto.valor)}">
+                    </option>
+                </select>
+            </div>
+
+            <!--Observação-->
+            <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <textarea class="form-control" id="observacao" th:field="*{observacao}" rows="3"></textarea>
+            </div>
+
+            <!--Botão para salvar e cancelar-->
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/pedidos" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html> 
