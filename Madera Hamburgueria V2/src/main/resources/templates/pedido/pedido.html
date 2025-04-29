@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido - Mesa <span th:text="${mesa.numero}"></span></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .card {
+            background-color: #2d2d2d;
+            border: none;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-primary:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+        .navbar {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">Restaurante</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            Mesa <span th:text="${mesa.numero}"></span>
+                        </span>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/produtos">Gerenciar Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/mesas">Gerenciar Mesas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Pedido Atual</h4>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${pedido.itens != null and !pedido.itens.empty}">
+                            <div class="table-responsive">
+                                <table class="table table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unit.</th>
+                                            <th>Subtotal</th>
+                                            <th>Observações</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${pedido.itens}">
+                                            <td th:text="${item.produto.nome}"></td>
+                                            <td th:text="${item.quantidade}"></td>
+                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.precoUnitario, 1, 2)}"></span></td>
+                                            <td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)}"></span></td>
+                                            <td th:text="${item.observacoes}"></td>
+                                            <td>
+                                                <form th:action="@{/pedido/{mesaId}/remover-item(mesaId=${mesa.id},itemId=${item.id})}" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-end mt-3">
+                                <h5>Total: R$ <span th:text="${#numbers.formatDecimal(pedido.valorTotal, 1, 2)}"></span></h5>
+                                <form th:action="@{/pedido/{mesaId}/finalizar(mesaId=${mesa.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary">Finalizar Pedido</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:unless="${pedido.itens != null and !pedido.itens.empty}" class="text-center">
+                            <p>Nenhum item no pedido</p>
+                            <a th:href="@{/pedido/{mesaId}/cardapio(mesaId=${mesa.id})}" class="btn btn-primary">Ver Cardápio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Histórico de Pedidos</h4>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${pedidosAnteriores != null and !pedidosAnteriores.empty}">
+                            <div th:each="pedidoAnterior : ${pedidosAnteriores}" class="mb-3">
+                                <h6>Pedido #<span th:text="${pedidoAnterior.id}"></span></h6>
+                                <p class="mb-1">
+                                    <small th:text="${#temporals.format(pedidoAnterior.dataHora, 'dd/MM/yyyy HH:mm')}"></small>
+                                </p>
+                                <p class="mb-1">
+                                    <strong>Total: R$ <span th:text="${#numbers.formatDecimal(pedidoAnterior.valorTotal, 1, 2)}"></span></strong>
+                                </p>
+                                <p class="mb-1">
+                                    <span class="badge" th:classappend="${pedidoAnterior.status == T(com.restaurante.model.Pedido.Status).CONCLUIDO ? 'bg-success' : 'bg-warning'}"
+                                          th:text="${pedidoAnterior.status}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div th:unless="${pedidosAnteriores != null and !pedidosAnteriores.empty}" class="text-center">
+                            <p>Nenhum pedido anterior</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
