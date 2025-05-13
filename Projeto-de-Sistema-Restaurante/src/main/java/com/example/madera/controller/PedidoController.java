@@ -136,7 +136,7 @@ public class PedidoController {
         if (pedido != null && pedido.getStatus() != StatusPedido.FINALIZADO) {
             pedidoService.atualizarStatus(id, StatusPedido.CANCELADO);
         }
-        return "redirect:/pedidos";
+        return "redirect:/pedidos/novo";
     }
 
     // Endpoint para exibir a página de pagamento
