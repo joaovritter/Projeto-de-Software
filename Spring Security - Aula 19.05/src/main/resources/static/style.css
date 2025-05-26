@@ -1,0 +1,18 @@
+
+.alert{
+    animation: pulsar 0.3s infinite;
+}
+
+@keyframes pulsar {
+    0% { font-size: 20px; }
+    50% { font-size: 24px; }
+    100% { font-size: 20px; }
+}
+
+.alert-success{
+    color: #28a745;
+}
+
+.alert-danger{
+    color: #dc3545;
+}
