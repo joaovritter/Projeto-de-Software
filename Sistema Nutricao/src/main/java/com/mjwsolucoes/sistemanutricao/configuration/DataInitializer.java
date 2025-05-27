@@ -24,7 +24,7 @@ public class DataInitializer implements CommandLineRunner {
 
     // Método executado automaticamente ao iniciar a aplicação.
     @Override
-    public void run(String... args) {
+    public void run (String... args) {
         // Verifica se o nutricionista "admin" já existe no banco de dados.
         if (nutricionistaRepository.findByUsername("admin").isEmpty()) {
             // Cria um novo nutricionista com a role ADMIN.
@@ -39,11 +39,11 @@ public class DataInitializer implements CommandLineRunner {
         // Verifica se o nutricionista "user" já existe no banco de dados.
         if (nutricionistaRepository.findByUsername("user").isEmpty()) {
             // Cria um novo nutricionista com a role USER.
-            Nutricionista user = new Nutricionista();
-            user.setUsername("user");
-            user.setPassword(passwordEncoder.encode("123456")); // Criptografa a senha.
-            user.setRole("USER");
-            nutricionistaRepository.save(user); // Salva o nutricionista no banco de dados.
+            Nutricionista nutricionista = new Nutricionista();
+            nutricionista.setUsername("user");
+            nutricionista.setPassword(passwordEncoder.encode("123456")); // Criptografa a senha.
+            nutricionista.setRole("USER");
+            nutricionistaRepository.save(nutricionista); // Salva o nutricionista no banco de dados.
             System.out.println("Nutricionista user criado.");
         }
     }

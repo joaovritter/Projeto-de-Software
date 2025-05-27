@@ -13,20 +13,24 @@ public class Nutricionista {
     @Column(name = "Username", nullable = false)
     private String username;
 
-    @Column(name = "Senha", nullable = false)
-    private String senha;
+    @Column(name = "Password", nullable = false)
+    private String password;
+
+    @Column(name = "Role", nullable = false)
+    private String role;
 
 
     public Nutricionista() {
     }
-    public Nutricionista(String username, String senha) {
+    public Nutricionista(String username, String password) {
         this.username = username;
-        this.senha = senha;
+        this.password = password;
     }
-    public Nutricionista(Long id, String username, String senha) {
+    public Nutricionista(Long id, String username, String password, String role) {
         this.id = id;
         this.username = username;
-        this.senha = senha;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -41,23 +45,29 @@ public class Nutricionista {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Nutricionista that = (Nutricionista) o;
-        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(senha, that.senha);
+        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(role, that.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, senha);
+        return Objects.hash(id, username, password, role);
     }
 
     @Override
@@ -65,7 +75,8 @@ public class Nutricionista {
         return "Nutricionista{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", senha='" + senha + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

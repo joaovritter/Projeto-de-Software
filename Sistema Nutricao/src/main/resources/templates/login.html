@@ -24,22 +24,19 @@
 
     <div class="content-right">
         <div class="login-box">
-            <form th:action="@{/login}" th:object="${Nutricionista}" method="post">
-
+            <form th:action="@{/login}" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" th:field="*{Nutricionista.username}" id="username" placeholder="username">
+                    <input type="text" id="username" placeholder="username">
                 </div>
-
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="password" th:field="*{Nutricionista.senha}" id="senha" placeholder="senha">
+                    <input type="password" id="senha" placeholder="senha">
                 </div>
-
                 <button type="submit" class="login-btn">Login</button>
 
                 <div class="register">
-                    <a th:href="@{/cadastro}">Cadastrar</a>
+                    <button type="submit" class="register-btn">Cadastrar</button>
                 </div>
             </form>
         </div>

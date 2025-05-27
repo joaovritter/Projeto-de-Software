@@ -122,13 +122,15 @@ body {
     margin-top: 15px;
 }
 
-.register a {
+.register button {
     color: #666;
     text-decoration: none;
     font-size: 0.9rem;
+    background: none;
+    border: none;
 }
 
-.register a:hover {
+.register button:hover {
     text-decoration: underline;
 }
 
