@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle do LED</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>Controle do LED</h1>
+    <p>Clique em um botão para controlar o LED conectado ao Arduino</p>
+
+    <form action="/arduino/on" method="get">
+        <button type="submit" class="btn ligar">Ligar</button>
+    </form>
+
+    <form action="/arduino/off" method="get">
+        <button type="submit" class="btn desligar">Desligar</button>
+    </form>
+</div>
+</body>
+</html>
