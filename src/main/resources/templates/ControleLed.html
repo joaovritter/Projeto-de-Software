@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle do Arduino</title>
+</head>
+<body>
+<h1>Controle do LED</h1>
+<button type="button" onclick="ligarLed()">Ligar LED</button>
+<button type="button" onclick="desligarLed()">Desligar LED</button>
+
+<script>
+    function ligarLed() {
+        fetch('/arduino/on', { method: 'GET' });
+    }
+
+    function desligarLed() {
+        fetch('/arduino/off', { method: 'GET' });
+    }
+</script>
+</body>
+</html>
