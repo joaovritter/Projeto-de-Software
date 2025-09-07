@@ -13,3 +13,12 @@ carboidratoKcal = carboidratoPorPorcao * 4
 lipidioKcal = lipidioPorPorcao * 9
 totalMacrosKcal = proteinaKcal + carboidratoKcal + lipidioKcal
 ```
+
+
+```
+custoPerCapita = custoTotal / numeroPorcoes
+```
+
+```
+custoUtilizado = (custoCompra / pesoCompra) * pesoBrutoUtilizado
+```
